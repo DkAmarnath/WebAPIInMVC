@@ -1,0 +1,55 @@
+﻿@model Mvc.Models.MVCRegisterModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="form-body">
+    @using(Html.BeginForm())
+    {
+      <div class="form-group">
+          @Html.LabelFor(model =>model.UserName)
+          @Html.EditorFor(model=>model.UserName)
+          @Html.ValidationMessageFor(model => model.UserName)
+      </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.email)
+        @Html.EditorFor(model => model.email)
+        @Html.ValidationMessageFor(model => model.email)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.FirstName)
+        @Html.EditorFor(model => model.FirstName)
+        @Html.ValidationMessageFor(model => model.FirstName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.LastName)
+        @Html.EditorFor(model => model.LastName)
+        @Html.ValidationMessageFor(model => model.LastName)
+    </div>
+    <div class="radio-inline">
+        @*@foreach (var sex in Model.SexList)
+        {
+        <div>
+            @Html.RadioButtonFor(model => model.Gender, new { id = "sex" + sex.ID })
+            @Html.Label("sex" + sex.ID, sex.Type)
+        </div>*@
+        @Html.RadioButtonFor(model=>model.Gender,"M",true)@Html.Label("Male")
+        @Html.RadioButtonFor(model=>model.Gender,"F",false)@Html.Label("Female")
+        }
+    </div>
+    <div class="form-group">
+
+        <input type="submit" value="Submit" class="btn button" />
+        <input type="reset" value="Reset" class="btn button"/>
+    </div>
+    }
+    @Html.RadioButtonFor(model => model.Gender, "M", true)
+    @Html.RadioButtonFor(model => model.Gender, "F", false)@Html.Label("Female")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+@Html.RadioButtonFor(model => model.Gender, "M", true)@Html.Label("Male")
+@Html.RadioButtonFor(model => model.Gender, "F", false)@Html.Label("Female")

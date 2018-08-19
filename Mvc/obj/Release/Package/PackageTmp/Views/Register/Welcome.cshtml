@@ -1,0 +1,8 @@
+﻿@model Mvc.Models.MVCLoginModel
+
+@{
+    ViewBag.Title = "Welcome";
+}
+
+<h2>Welcome @Html.LabelFor(m=>m.UserName,TempData["UserName"] as string)</h2>
+

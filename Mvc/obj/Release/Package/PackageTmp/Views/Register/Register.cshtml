@@ -1,0 +1,148 @@
+﻿@model Mvc.Models.MVCRegisterModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>Register</h2>
+<div class="container" >
+    @using (Html.BeginForm("RegisterForm", "Register"))
+    {
+        <div class="form-group" >
+            @Html.LabelFor(model => model.UserName)
+             @Html.TextBoxFor(model => model.UserName)
+            @Html.ValidationMessageFor(model => model.UserName)
+        </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.email)
+        @Html.TextBoxFor(model => model.email)
+        @Html.ValidationMessageFor(model => model.email)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.FirstName)
+        @Html.TextBoxFor(model => model.FirstName)
+        @Html.ValidationMessageFor(model => model.FirstName)
+    </div>
+       <div class="form-group">
+            @Html.LabelFor(model => model.LastName)
+            @Html.TextBoxFor(model => model.LastName)
+            @Html.ValidationMessageFor(model => model.LastName)
+       </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Phone)
+        @Html.TextBoxFor(model => model.Phone)
+        @Html.ValidationMessageFor(model => model.Phone)
+    </div>
+        <div class="radio">
+            @Html.RadioButtonFor(model => model.Gender, "Male", true)@Html.Label("Male")
+            @Html.RadioButtonFor(model => model.Gender, "Female", false)@Html.Label("Female")
+        </div>
+        <div class="dropdown">
+            @if (ViewBag.CountryList != null)
+            {
+                @Html.DropDownListFor(model => model.CountryId, ViewBag.CountryList as SelectList, "---select Country---", new { @class = "form-control" })
+            }          
+        </div>
+    <div class="dropdown">
+        
+            @Html.DropDownListFor(model => model.StateId, new SelectList (" "), "---select State---", new { @class = "form-control" })
+        
+    </div>
+    <div class="dropdown">
+
+        @Html.DropDownListFor(model => model.CityId, new SelectList(" "), "---select City---", new { @class = "form-control" })
+
+    </div>
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Address)
+            @Html.TextAreaFor(model=>model.Address)
+        </div>
+    
+        <div class="form-group">
+            @Html.LabelFor(model=>model.Password)
+            @Html.PasswordFor(model=>model.Password)
+            @Html.ValidationMessageFor(model=>model.Password,"", new { @class = "text-danger" })
+        </div>
+        <div>
+            @Html.LabelFor(model => model.ConfirmPassword)
+            @Html.PasswordFor(model => model.ConfirmPassword)
+            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+
+        </div>
+        <div class="button">
+            <input type="submit" value="Submit" class="btn button" />
+            <input type="reset" value="Reset" class="btn button" />
+        </div>
+    
+    }
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#CountryId").change(function () {
+            $.ajax({
+                url: '/Register/GetStateList',
+                type: 'GET',
+                dataType: 'json',
+                data: { CountryId: $("#CountryId").val() },
+                success: function (d) {
+
+                    $("#StateId").empty(); // Clear the please wait  
+                    $("#StateId").append($("<option></option>").val('').html('Select State'));
+                    $.each(d, function (i, states) {
+                        $("#StateId").append($("<option></option>").val(states.StateId).html(states.StateName));
+                    });
+                },
+                error: function () {
+                    alert('Error!');
+                }
+            });
+
+        });
+        $("#StateId").change(function () {
+            $.ajax({
+                url: '/Register/GetCityList',
+                type: 'GET',
+                datatype: 'json',
+                data: { StateId: $("#StateId").val() },
+                success: function (d) {
+                    $("#CityId").empty();
+                    $("#CityId").append($("<option></option>").val('').html('Select City'));
+                    $.each(d, function (i, cities) {
+                        $("#CityId").append($("<option></option>").val(cities.CityId).html(cities.CityName));
+                    });
+                },
+                error: function () {
+                    aleart('Error!');
+                }
+            });
+
+        });
+
+    });
+    //$get("/Register/GetStateList", { CountryId: $("#CountryId").val() }, function (data) {
+    //    $("#StateId").empty();
+    //$.each(data, function (index, row) {
+    //    $("#StateId").append("<option value='"+ row.StateId +"'>"+row.StateName +"</option>")
+    //})
+    //})
+</script>
