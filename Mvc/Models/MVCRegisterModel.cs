@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Mvc.Models
 {
@@ -10,6 +11,7 @@ namespace Mvc.Models
     {
         [Required]
         [Display(Name = "User Name:")]
+        [Remote("IsUserNameAvailable","Register",ErrorMessage="Name Already Exists")]
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string UserName { get; set; }
 
@@ -56,7 +58,7 @@ namespace Mvc.Models
 
         [Required(ErrorMessage="Confirmation Password is required.")]
         [DataType(DataType.Password)]
-        [Compare("Password",ErrorMessage="Password and Confirm Password must match")]
+        [System.ComponentModel.DataAnnotations.Compare("Password",ErrorMessage="Password and Confirm Password must match")]
         public string ConfirmPassword {get;set;}
     }
     public class Sex
@@ -129,5 +131,6 @@ namespace Mvc.Models
         public string Address { get; set; }
 
         [Required(ErrorMessage="Country required")]
+        public string Country { get; set; }
     }
 }

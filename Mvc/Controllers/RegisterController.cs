@@ -96,6 +96,22 @@ namespace Mvc.Controllers
             //}
             //return RedirectToAction("Register", "LoginPage");
 
-        }  
+        }
+        //[HttpPost]
+        //[AllowAnonymous]
+        public JsonResult IsUserNameAvailable(string UserName)
+        {
+          HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync(string.Format("Register/IsUserNameExist/{0}", UserName)).Result;
+          bool t = response.Content.ReadAsAsync<bool>().Result;
+            //bool xx = BlobManager.IsNameAvailable(Name);
+            //if (!xx)
+            //{
+            if(t==true)
+                return Json("The name already exists", JsonRequestBehavior.AllowGet);
+            else
+                return Json(true, JsonRequestBehavior.AllowGet);
+            //}
+            //return Json(true, JsonRequestBehavior.AllowGet);
+        }
     }
 }

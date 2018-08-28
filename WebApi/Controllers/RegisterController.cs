@@ -113,7 +113,26 @@ namespace WebApi.Controllers
             }
             //HttpResponseMessage httpmsg = new HttpResponseMessage();
             //return Ok(HttpStatusCode.OK);
-            return false;
+            else {
+                return false;
+            } 
+        }
+        [HttpGet]
+        //GET:api/Register/IsUsernameExist
+        [Route("IsUserNameExist/{UserName}")]
+        public bool IsUserNameExist(string UserName)
+        {
+            this.db.Configuration.ProxyCreationEnabled = false;
+            List<UserDetail> _lst = new List<UserDetail>();
+            _lst = db.UserDetails.Where(m => m.UserName == UserName).ToList();
+            if (_lst.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
