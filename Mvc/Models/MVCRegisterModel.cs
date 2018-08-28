@@ -11,7 +11,7 @@ namespace Mvc.Models
     {
         [Required]
         [Display(Name = "User Name:")]
-        [Remote("IsUserNameAvailable","Register",ErrorMessage="Name Already Exists")]
+        [Remote("IsUserNameAvailable","Register",ErrorMessage="User Name Already Exists. Username ")]
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string UserName { get; set; }
 

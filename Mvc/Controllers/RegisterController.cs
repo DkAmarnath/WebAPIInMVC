@@ -101,7 +101,7 @@ namespace Mvc.Controllers
         //[AllowAnonymous]
         public JsonResult IsUserNameAvailable(string UserName)
         {
-          HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync(string.Format("Register/IsUserNameExist/{0}", UserName)).Result;
+       HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync(string.Format("Register/IsUserNameExist/{0}", UserName)).Result;
           bool t = response.Content.ReadAsAsync<bool>().Result;
             //bool xx = BlobManager.IsNameAvailable(Name);
             //if (!xx)
