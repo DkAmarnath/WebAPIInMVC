@@ -105,7 +105,7 @@ namespace Mvc.Models
     }
     public class MVCLoginModel
     {
-        [Required]
+        [Required(ErrorMessage = "UserName is required.")]
         [Display(Name = "User Name:")]
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string UserName { get; set; }
@@ -114,5 +114,20 @@ namespace Mvc.Models
         [DataType(DataType.Password)]
         [Display(Name = "Password:")]
         public string Password { get; set; }
+    }
+
+    public class MVCClientModel
+    {
+        [Required(ErrorMessage = "Name is required.")]
+        [Display(Name = "Name:")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "Password is required.")]
+        //[DataType(DataType.Password)]
+        [Display(Name = "Address:")]
+        public string Address { get; set; }
+
+        [Required(ErrorMessage="Country required")]
     }
 }

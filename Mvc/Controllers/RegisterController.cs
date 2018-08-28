@@ -24,6 +24,7 @@ namespace Mvc.Controllers
             HttpResponseMessage response = GlobalVariables.WebApiClient.GetAsync("Register/CountryDetails").Result;
             _list = response.Content.ReadAsAsync<IEnumerable<Country>>().Result;
             ViewBag.CountryList = new SelectList(_list, "CountryId", "CountryName");
+            ModelState.Clear();
             return View();
         }
         [HttpPost]
@@ -67,6 +68,7 @@ namespace Mvc.Controllers
 
         public ActionResult LoginPage()
         {
+            //ModelState.Clear();
             return View();
         }
         [HttpPost]
